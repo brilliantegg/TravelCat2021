@@ -447,12 +447,3 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-bin/Debug/netcoreapp3.1/TravelCat2021.dll
-
-Controllers/ExampleController.cs
-
-obj/Debug/netcoreapp3.1/TravelCat2021.csproj.FileListAbsolute.txt
-
-obj/Debug/netcoreapp3.1/TravelCat2021.dll
-
-obj/Debug/netcoreapp3.1/TravelCat2021.genruntimeconfig.cache
