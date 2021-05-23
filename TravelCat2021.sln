@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelCat2021", "TravelCat2021.csproj", "{FD17F6B5-BE2B-40DC-B075-EED9C88FEACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD17F6B5-BE2B-40DC-B075-EED9C88FEACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD17F6B5-BE2B-40DC-B075-EED9C88FEACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD17F6B5-BE2B-40DC-B075-EED9C88FEACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD17F6B5-BE2B-40DC-B075-EED9C88FEACA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06C87BFD-C4E9-4FA5-8135-FCFDB2902F99}
+	EndGlobalSection
+EndGlobal
