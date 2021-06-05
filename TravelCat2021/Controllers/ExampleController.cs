@@ -26,6 +26,6 @@ namespace TravelCat2021.Controllers
       return res;
     }
 
-    public async Task Delete() { }
+    //public async Task Delete() { }
   }
 }
