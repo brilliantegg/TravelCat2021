@@ -909,7 +909,7 @@ namespace TravelCat2021.Context
                     .HasColumnName("tourism_id")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.TourismPhoto1)
+                entity.Property(e => e.PhotoUrl)
                     .HasMaxLength(300)
                     .IsUnicode(false)
                     .HasColumnName("tourism_photo");
