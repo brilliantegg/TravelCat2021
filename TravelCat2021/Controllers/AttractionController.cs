@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TravelCat2021.Interfaces;
+using TravelCat2021.Models;
 using TravelCat2021.ViewModels;
 
 namespace TravelCat2021.Controllers
@@ -13,10 +14,12 @@ namespace TravelCat2021.Controllers
   public class AttractionController : ControllerBase
   {
     private readonly IAttractionService _attraction;
+    private readonly IFileService _file;
 
-    public AttractionController(IAttractionService attraction)
+    public AttractionController(IAttractionService attraction, IFileService file)
     {
       _attraction = attraction;
+      _file = file;
     }
 
     // GET: api/<AttractionController>
@@ -28,15 +31,27 @@ namespace TravelCat2021.Controllers
 
 
     /// <summary>
-    /// 依編號取得景點(現在只有1號)
+    /// 依編號取得景點
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">景點id</param>
     /// <returns></returns>
     // GET api/<AttractionController>/5
-    [HttpGet("{id}")]
-    public async Task<AttractionDetailView> Get(int id = 1)
+    [HttpGet("Activity/{id}")]
+    public async Task<Activity> Get(string id)
     {
       var res = await _attraction.Get(id);
+      return res;
+    }
+
+    /// <summary>
+    /// 依編號取得景點圖片
+    /// </summary>
+    /// <param name="id">景點id</param>
+    /// <returns></returns>
+    [HttpGet("Activity/{id}/Photo")]
+    public async Task<ICollection<string>> Photo(string id)
+    {
+      var res = await _file.GetTourismPhoto(id);
       return res;
     }
 

@@ -36,6 +36,8 @@ namespace TravelCat2021
       services.AddControllers();
       services.AddTransient<IAttractionService, AttractionService>();
       services.AddTransient<ICommentService, CommentService>();
+      services.AddTransient<IFileService, FileService>();
+
 
       services.AddSwaggerGen();
     }
@@ -65,7 +67,8 @@ namespace TravelCat2021
       app.UseAuthorization();
 
       app.UseCors(builder =>
-        builder.WithOrigins("http://localhost:8080", "https://localhost:8080", "https://prochini.github.io")
+        builder.WithOrigins("http://localhost:8080", "https://localhost:8080", 
+        "https://prochini.github.io")
         .AllowAnyMethod()
         .AllowAnyHeader());
 
