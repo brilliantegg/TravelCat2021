@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelCat2021.Context;
 using TravelCat2021.Interfaces;
 using TravelCat2021.Services;
 
@@ -28,6 +30,8 @@ namespace TravelCat2021
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<TravelDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TravelDatabase")));
+
       services.AddCors();
       services.AddControllers();
       services.AddTransient<IAttractionService, AttractionService>();
@@ -61,7 +65,7 @@ namespace TravelCat2021
       app.UseAuthorization();
 
       app.UseCors(builder =>
-        builder.WithOrigins("http://localhost:8080", "https://localhost:8080")
+        builder.WithOrigins("http://localhost:8080", "https://localhost:8080", "https://prochini.github.io")
         .AllowAnyMethod()
         .AllowAnyHeader());
 
