@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -67,21 +68,22 @@ namespace TravelCat2021
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
       });
 
-      app.UseHttpsRedirection();
+      //app.UseHttpsRedirection();
 
       app.UseRouting();
 
       app.UseAuthorization();
 
       app.UseCors(builder =>
-        builder.WithOrigins(
+        builder
+        .WithOrigins(
           "http://localhost:8080",
           "https://localhost:8080",
-          "http://18.191.222.23/",
-          "http://18.191.222.23:8080/",
-          "http://18.191.222.23:2222/")
-        .SetIsOriginAllowedToAllowWildcardSubdomains()
-        .WithMethods("GET")
+          "http://18.191.222.23",
+          "http://18.191.222.23:8080",
+          "http://18.191.222.23:2222")
+        .WithMethods("GET", "OPTIONS", "POST")
+        //.WithHeaders(HeaderNames.AccessControlAllowOrigin, HeaderNames.ContentType)
         .AllowAnyHeader());
 
       app.UseEndpoints(endpoints =>
