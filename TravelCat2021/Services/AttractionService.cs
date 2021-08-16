@@ -7,6 +7,7 @@ using TravelCat2021.Context;
 using TravelCat2021.Interfaces;
 using TravelCat2021.Models;
 using TravelCat2021.ViewModels;
+using TravelCat2021.Enums;
 
 namespace TravelCat2021.Services
 {
@@ -38,11 +39,72 @@ namespace TravelCat2021.Services
     //  return res;
     //}
 
-    public async Task<Activity> Get(string id)
+    public async Task<Activity> GetActivity(string id)
     {
       var target = await _db.Activities.Where(x => x.ActivityId == id).FirstOrDefaultAsync();
       return target;
     }
 
+    public async Task<(ICollection<Activity> ActivityList, int Total)> GetActivityList(string search, string city, string district,
+      int page, int limit, OrderType orderType = OrderType.Default)
+    {
+      var query = _db.Activities.AsQueryable();
+
+      if (!string.IsNullOrEmpty(search))
+      {
+        query = query.Where(x => EF.Functions.Like(x.District, $"%{search}%") ||
+        EF.Functions.Like(x.City, $"%{search}%") ||
+        EF.Functions.Like(x.AddressDetail, $"%{search}%") ||
+        EF.Functions.Like(x.ActivityTitle, $"%{search}%"));
+      }
+      if (!string.IsNullOrEmpty(city))
+      {
+        query = query.Where(x => EF.Functions.Like(x.City, $"%{city}%"));
+      }
+      if (!string.IsNullOrEmpty(district))
+      {
+        query = query.Where(x => EF.Functions.Like(x.District, $"%{district}%"));
+      }
+
+      switch (orderType)
+      {
+        case OrderType.City:
+          query = query.OrderBy(x => x.City);
+          break;
+        case OrderType.BeginDate:
+          query = query.OrderBy(x => x.BeginDate);
+          break;
+        case OrderType.EndDate:
+          query = query.OrderBy(x => x.EndDate);
+          break;
+        case OrderType.Comment:
+          var commentQuery = _db.Comments.AsNoTracking();
+          query = query.OrderByDescending(x => commentQuery.Count(y => y.TourismId == x.ActivityId));
+          break;
+        default:
+          break;
+      }
+
+      var activityList = await query.Skip(limit * (page - 1)).Take(limit).ToListAsync();
+      return (activityList, await query.CountAsync());
+    }
+
+    public async Task<Hotel> GetHotel(string id)
+    {
+      var target = await _db.Hotels.Where(x => x.HotelId == id).FirstOrDefaultAsync();
+      return target;
+    }
+
+    public async Task<Restaurant> GetRestaurant(string id)
+    {
+      var target = await _db.Restaurants.Where(x => x.RestaurantId == id).FirstOrDefaultAsync();
+      return target;
+    }
+
+    public async Task<Spot> GetSpot(string id)
+    {
+      var target = await _db.Spots.Where(x => x.SpotId == id).FirstOrDefaultAsync();
+      return target;
+    }
   }
 }
