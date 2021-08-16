@@ -10,7 +10,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using TravelCat2021.Context;
 using TravelCat2021.Interfaces;
@@ -39,7 +41,12 @@ namespace TravelCat2021
       services.AddTransient<IFileService, FileService>();
 
 
-      services.AddSwaggerGen();
+      services.AddSwaggerGen(c =>
+      {
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,9 +74,14 @@ namespace TravelCat2021
       app.UseAuthorization();
 
       app.UseCors(builder =>
-        builder.WithOrigins("http://localhost:8080", "https://localhost:8080", 
-        "https://prochini.github.io")
-        .AllowAnyMethod()
+        builder.WithOrigins(
+          "http://localhost:8080",
+          "https://localhost:8080",
+          "http://18.191.222.23/",
+          "http://18.191.222.23:8080/",
+          "http://18.191.222.23:2222/")
+        .SetIsOriginAllowedToAllowWildcardSubdomains()
+        .WithMethods("GET")
         .AllowAnyHeader());
 
       app.UseEndpoints(endpoints =>

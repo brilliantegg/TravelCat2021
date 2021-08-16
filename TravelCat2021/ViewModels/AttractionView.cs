@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TravelCat2021.Models;
 
 namespace TravelCat2021.ViewModels
 {
-  public class AttractionView
+  public class AttractionListView<T>
   {
+    public ICollection<T> Attractions { get; set; }
+    public int Total { get; set; }
   }
+
   public class AttractionDetailView
   {
     public int AttractionId { get; set; }
